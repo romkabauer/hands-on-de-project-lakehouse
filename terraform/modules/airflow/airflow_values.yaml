@@ -1,0 +1,33 @@
+executor: "KubernetesExecutor"
+createUserJob:
+  useHelmHooks: false
+  applyCustomEnv: false
+migrateDatabaseJob:
+  useHelmHooks: false
+  applyCustomEnv: false
+registry:
+  secretName: ${registry-secret-name}
+defaultAirflowRepository: ${default-airflow-repository}
+defaultAirflowTag: ${airflow-image-tag}
+images:
+  airflow:
+    repository: ${default-airflow-repository}
+    tag: ${airflow-image-tag}
+    pullPolicy: Always
+webserverSecretKey: ${airflow-webserver-secret-result}
+webserver:
+  startupProbe:
+    timeoutSeconds: 60
+  livenessProbe:
+    initialDelaySeconds: 60
+env:
+  - name: PRODUCER_BATCH_IMAGE
+    value: ${producer-image}:${data-services-image-tag}
+  - name: PRODUCER_BATCH_NAMESPACE
+    value: ${namespace}
+  - name: PRODUCER_BATCH_CONFIG
+    value: ${producer-batch-config}
+  - name: GCP_CREDS_SECRET_NAME
+    value: ${gcp-creds-secret}
+  - name: GCP_REGISTRY_SECRET
+    value: ${gcp-registry-secret}
