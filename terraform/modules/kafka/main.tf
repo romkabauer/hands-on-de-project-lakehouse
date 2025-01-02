@@ -126,11 +126,11 @@ resource "kubernetes_stateful_set" "statefulset_kafka" {
             "-exc",
             <<-EOT
             export KAFKA_CFG_NODE_ID=$${HOSTNAME##*-}
-            
+
             /opt/bitnami/scripts/kafka/setup.sh
             /entrypoint.sh
             exec /run.sh
-            
+
             EOT
             ,
             ""
@@ -179,6 +179,92 @@ resource "kubernetes_stateful_set" "statefulset_kafka" {
 
     update_strategy {
       type = "RollingUpdate"
+    }
+  }
+}
+
+resource "kubernetes_service" "service_kafka_ui" {
+  metadata {
+    name = "kafka-ui-service"
+    namespace = var.k8s-namespace
+    labels = {
+      app = "kafka-ui"
+    }
+  }
+
+  spec {
+
+    selector = {
+      app = "kafka-ui"
+    }
+
+    port {
+      port        = 8090
+      target_port = 8080
+    }
+
+  }
+}
+
+resource "kubernetes_deployment" "kafka_ui" {
+  metadata {
+    name = "kafka-ui"
+    namespace = var.k8s-namespace
+    labels = {
+      app = "kafka-ui"
+    }
+  }
+
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "kafka-ui"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "kafka-ui"
+        }
+      }
+
+      spec {
+        container {
+          name = "kafka-ui-container"
+          image = "provectuslabs/kafka-ui:v0.7.2"
+          port {
+            container_port = 8080
+          }
+
+          env {
+            name = "KAFKA_CLUSTERS_0_NAME"
+            value = kubernetes_service.service_kafka_headless.metadata[0].name
+          }
+
+          env {
+            name = "KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS"
+            value = "${kubernetes_service.service_kafka_headless.metadata[0].name}.${var.k8s-namespace}:9092"
+          }
+
+          env {
+            name = "AUTH_TYPE"
+            value = "DISABLED"
+          }
+
+          resources {
+            requests = {
+              memory = "256Mi"
+              cpu    = "250m"
+            }
+            limits = {
+              memory = "512Mi"
+              cpu    = "500m"
+            }
+          }
+        }
+      }
     }
   }
 }

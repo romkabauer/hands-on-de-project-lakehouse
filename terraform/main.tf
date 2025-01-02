@@ -13,29 +13,29 @@ provider "helm" {
 #   gcp-project-id = var.gcp-project-id
 # }
 
-# module "gcp-registry" {
-#   source = "./modules/gcp_registry"
+module "gcp-registry" {
+  source = "./modules/gcp_registry"
 
-#   gcp-project-id = var.gcp-project-id
-# }
+  gcp-project-id = var.gcp-project-id
+}
 
-# module "docker" {
-#   source = "./modules/docker"
+module "docker" {
+  source = "./modules/docker"
 
-#   gcp-project-id = var.gcp-project-id
+  gcp-project-id = var.gcp-project-id
 
-#   registry-location = module.gcp-registry.registry-location
-#   registry-access-key = module.gcp-registry.registry-access-key
+  registry-location = module.gcp-registry.registry-location
+  registry-access-key = module.gcp-registry.registry-access-key
 
-#   airflow-repository-id = module.gcp-registry.airflow-repository-id
-#   data-services-repository-id = module.gcp-registry.data-services-repository-id
-# }
+  airflow-repository-id = module.gcp-registry.airflow-repository-id
+  data-services-repository-id = module.gcp-registry.data-services-repository-id
+}
 
-# module "kafka" {
-#   source = "./modules/kafka"
+module "kafka" {
+  source = "./modules/kafka"
 
-#   brokers-number = 1
-# }
+  brokers-number = 1
+}
 
 # module "producer" {
 #   source = "./modules/producer"
@@ -63,6 +63,6 @@ provider "helm" {
 #   depends_on = [ module.docker ]
 # }
 
-module "flink" {
-  source = "./modules/flink"
-}
+# module "flink" {
+#   source = "./modules/flink"
+# }
