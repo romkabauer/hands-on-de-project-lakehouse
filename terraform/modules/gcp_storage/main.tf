@@ -3,6 +3,7 @@ resource "google_storage_bucket" "gcs-bucket" {
     name          = var.bucket-name
     location      = var.bucket-location
     storage_class = "STANDARD"
+    force_destroy = true
 
     uniform_bucket_level_access = true
 }
