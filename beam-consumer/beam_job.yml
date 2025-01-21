@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: beam-job
+  namespace: flink
+spec:
+  template:
+    metadata:
+      labels:
+        app: beam-job
+    spec:
+      containers:
+        - name: beam-job
+          image: beam-python-harness:2.56.0
+          command: ["python"]
+          args:
+            - "-m"
+            - "beam_app.run"
+      restartPolicy: Never

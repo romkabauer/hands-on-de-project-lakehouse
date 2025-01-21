@@ -7,14 +7,10 @@ resource "kubernetes_namespace" "flink" {
 resource "helm_release" "flink" {
     name = "flink"
     namespace = kubernetes_namespace.flink.metadata[0].name
-    repository = "https://downloads.apache.org/flink/flink-kubernetes-operator-1.7.0/"
+    repository = "https://downloads.apache.org/flink/flink-kubernetes-operator-1.8.0/"
     chart = "flink-kubernetes-operator"
-    version = "1.7.0"
+    version = "1.8.0"
 
-    set {
-      name = "webhook.create"
-      value = false
-    }
-    
-    # values = ["${data.template_file.airflow_values.rendered}"]
+    values = [templatefile("modules/flink/flink_values.yaml", {})]
+
 }

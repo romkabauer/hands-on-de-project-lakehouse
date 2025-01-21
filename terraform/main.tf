@@ -37,13 +37,14 @@ module "kafka" {
   brokers-number = 1
 }
 
-# module "producer" {
-#   source = "./modules/producer"
+module "producer" {
+  source = "./modules/producer"
 
-#   kafka-service-name = module.kafka.kafka-service
-#   registry-secret = module.gcp-registry.registry-secret
-#   docker-image = "${module.gcp-registry.registry-location}-docker.pkg.dev/${var.gcp-project-id}/${module.gcp-registry.data-services-repository-id}/${module.docker.data-services-image-name}:${module.docker.data-services-image-tag}"
-# }
+  kafka-service-name = module.kafka.kafka-service
+  kafka-input-topic = var.kafka-expenses-topic
+  registry-secret = module.gcp-registry.registry-secret
+  docker-image = "${module.gcp-registry.registry-location}-docker.pkg.dev/${var.gcp-project-id}/${module.gcp-registry.data-services-repository-id}/${module.docker.data-producer-image-name}:${module.docker.data-producer-image-tag}"
+}
 
 # module "airflow" {
 #   source = "./modules/airflow"
@@ -63,6 +64,16 @@ module "kafka" {
 #   depends_on = [ module.docker ]
 # }
 
+# TODO: try to write custom ParDo with pyiceberg to write from kafka to iceberg table
+# since built-in Iceberg sink is not woking properly with Beam Python SDK on Flink Runner
+# Related issue: https://github.com/apache/beam/issues/31830
+
 # module "flink" {
 #   source = "./modules/flink"
+
+#   kafka-service-name = module.kafka.kafka-service
+#   kafka-input-topic = var.kafka-expenses-topic
+
+#   registry-secret = module.gcp-registry.registry-secret
+#   beam-python-harness-docker-image = "${module.gcp-registry.registry-location}-docker.pkg.dev/${var.gcp-project-id}/${module.gcp-registry.data-services-repository-id}/${module.docker.beam-python-harness-image-name}:${module.docker.beam-python-harness-image-tag}"
 # }

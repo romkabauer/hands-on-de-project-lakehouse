@@ -10,10 +10,9 @@ class JSONGenerator(AbstractGenerator):
         data = ExpenseRecord(
             user_id=str(self._generate_uuid()),
             user_country=self._generate_from_set(["USA", "Germany", "Turkey", "Russia", "Georgia"]),
-            category=self._generate_from_set(["Food", "Eat outside", "Rent", "Medicine", "Other"]),
+            category=self._generate_from_set(["Food", "Eat out", "Rent", "Medicine", "Other"]),
             amount=round(self._generate_from_dist(params=(-2,1)),4),
             currency=self._generate_from_set(["USD", "EUR", "TRY", "RUB", "GEL"]),
             custom_message=self.properties.get("default_message", "Default message")
         )
         return asdict(data)
- 

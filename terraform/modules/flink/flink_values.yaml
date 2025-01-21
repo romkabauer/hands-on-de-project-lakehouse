@@ -1,0 +1,16 @@
+webhook:
+  create: false
+operatorVolumeMounts:
+  create: true
+  data:
+    - name: flink-artifacts
+      mountPath: /opt/flink/artifacts
+operatorVolumes:
+  create: true
+  data:
+    - name: flink-artifacts
+      emptyDir:
+        sizeLimit: 250Mi
+defaultConfiguration:
+  flink-conf.yaml: |+
+    kubernetes.operator.user.artifacts.base.dir: /opt/flink/artifacts

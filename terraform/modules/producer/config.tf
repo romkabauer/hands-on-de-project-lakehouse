@@ -13,6 +13,6 @@ resource "kubernetes_config_map" "producer-config" {
     EVENT_GENERATOR_DEFAULT_MESSAGE     = "Event body with information"
 
     KAFKA_SERVER                        = "${var.kafka-service-name}:9092"
-    KAFKA_TOPIC_NAME                    = "expenses"
+    KAFKA_TOPIC_NAME                    = "${var.kafka-input-topic}"
   }
 }

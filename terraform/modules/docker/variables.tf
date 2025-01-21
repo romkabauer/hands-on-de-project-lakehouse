@@ -24,17 +24,37 @@ variable "airflow-image-tag" {
   default = "0.1.0"
 }
 
-variable "data-services-docker-file-location" {
+variable "data-producer-docker-file-location" {
   type = string
   default = "../transactional_app/."
 }
 
-variable "data-services-image-name" {
+variable "data-producer-image-name" {
   type = string
   default = "data-producer"
 }
 
-variable "data-services-image-tag" {
+variable "data-producer-image-tag" {
   type = string
   default = "0.1.0"
 }
+
+# variable "beam-python-harness-docker-file-location" {
+#   type = string
+#   default = "../beam-consumer"
+# }
+
+# variable "beam-python-harness-docker-file-name" {
+#   type = string
+#   default = "Dockerfile-python-harness"
+# }
+
+# variable "beam-python-harness-image-name" {
+#   type = string
+#   default = "beam-python-harness"
+# }
+
+# variable "beam-python-harness-image-tag" {
+#   type = string
+#   default = "2.61.0_v0.1.0"
+# }
