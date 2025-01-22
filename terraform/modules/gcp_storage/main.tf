@@ -8,6 +8,16 @@ resource "google_storage_bucket" "gcs-bucket" {
     uniform_bucket_level_access = true
 }
 
+resource "google_storage_bucket" "gcs-bucket-warehouse" {
+    project       = var.gcp-project-id
+    name          = "expenses-warehouse"
+    location      = var.bucket-location
+    storage_class = "STANDARD"
+    force_destroy = true
+
+    uniform_bucket_level_access = true
+}
+
 resource "google_service_account" "gcs-sa" {
     project = var.gcp-project-id
     account_id = "gcs-sa-contributor"

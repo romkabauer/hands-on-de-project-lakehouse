@@ -60,6 +60,16 @@ resource "kubernetes_deployment" "producer" {
               name = "producer-config"
             }
           }
+
+          resources {
+            requests = {
+              ephemeral-storage = "512Mi"
+            }
+
+            limits = {
+              ephemeral-storage = "1Gi"
+            }
+          }
         }
       }
     }

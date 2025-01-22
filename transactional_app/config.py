@@ -8,6 +8,6 @@ config = {
         }
     },
     "producer": {
-        "frequency_sec": 3
+        "frequency_sec": 1
     }
 }

@@ -7,11 +7,11 @@ provider "helm" {
   }
 }
 
-# module "gcp-storage" {
-#   source = "./modules/gcp_storage"
+module "gcp-storage" {
+  source = "./modules/gcp_storage"
 
-#   gcp-project-id = var.gcp-project-id
-# }
+  gcp-project-id = var.gcp-project-id
+}
 
 module "gcp-registry" {
   source = "./modules/gcp_registry"
@@ -35,6 +35,7 @@ module "kafka" {
   source = "./modules/kafka"
 
   brokers-number = 1
+  storage-sa-key = module.gcp-storage.storage-access-key
 }
 
 module "producer" {
@@ -63,6 +64,12 @@ module "producer" {
 
 #   depends_on = [ module.docker ]
 # }
+
+module "lakehouse" {
+  source = "./modules/lakehouse"
+
+  gcp-project-id = var.gcp-project-id
+}
 
 # TODO: try to write custom ParDo with pyiceberg to write from kafka to iceberg table
 # since built-in Iceberg sink is not woking properly with Beam Python SDK on Flink Runner

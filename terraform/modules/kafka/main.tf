@@ -1,5 +1,3 @@
-# TODO: Schema Registry
-
 resource "kubernetes_namespace" "kafka" {
   metadata {
     name = var.k8s-namespace
@@ -171,7 +169,10 @@ resource "kubernetes_stateful_set" "statefulset_kafka" {
 
         resources {
           requests = {
-            storage = "1Gi"
+            storage = "256Mi"
+          }
+          limits = {
+            storage = "512Mi"
           }
         }
       }
@@ -181,6 +182,25 @@ resource "kubernetes_stateful_set" "statefulset_kafka" {
       type = "RollingUpdate"
     }
   }
+}
+
+resource "helm_release" "kafka_services" {
+    # Include:
+      # schema registry
+      # kafka rest
+      # kafka connect
+
+    name = "kafka-services"
+    namespace = var.k8s-namespace
+    repository = "https://confluentinc.github.io/cp-helm-charts/"
+    chart = "cp-helm-charts"
+
+    depends_on = [ kubernetes_stateful_set.statefulset_kafka ]
+
+    values = [templatefile("modules/kafka/kafka_services_values.yaml", {
+      namespace = var.k8s-namespace,
+      kafka_service_name = kubernetes_service.service_kafka_headless.metadata[0].name
+    })]
 }
 
 resource "kubernetes_service" "service_kafka_ui" {
@@ -235,7 +255,7 @@ resource "kubernetes_deployment" "kafka_ui" {
           name = "kafka-ui-container"
           image = "provectuslabs/kafka-ui:v0.7.2"
           port {
-            container_port = 8080
+            container_port = 8090
           }
 
           env {
@@ -257,10 +277,12 @@ resource "kubernetes_deployment" "kafka_ui" {
             requests = {
               memory = "256Mi"
               cpu    = "250m"
+              ephemeral-storage = "256Mi"
             }
             limits = {
               memory = "512Mi"
               cpu    = "500m"
+              ephemeral-storage = "512Mi"
             }
           }
         }

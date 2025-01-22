@@ -41,7 +41,7 @@ variable "data-producer-image-tag" {
 
 # variable "beam-python-harness-docker-file-location" {
 #   type = string
-#   default = "../beam-consumer"
+#   default = "../beam_consumer"
 # }
 
 # variable "beam-python-harness-docker-file-name" {
