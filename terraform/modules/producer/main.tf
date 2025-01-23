@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "ingestion-layer" {
+resource "kubernetes_namespace" "producer" {
   metadata {
     name = var.k8s-namespace
   }
@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "ingestion-layer" {
 resource "kubernetes_secret" "registry" {
   metadata {
     name = "registry"
-    namespace = kubernetes_namespace.ingestion-layer.metadata[0].name
+    namespace = var.k8s-namespace
   }
 
   type = "kubernetes.io/dockerconfigjson"

@@ -188,7 +188,6 @@ resource "helm_release" "kafka_services" {
     # Include:
       # schema registry
       # kafka rest
-      # kafka connect
 
     name = "kafka-services"
     namespace = var.k8s-namespace

@@ -39,6 +39,21 @@ variable "data-producer-image-tag" {
   default = "0.1.0"
 }
 
+variable "kafka-connect-docker-file-location" {
+  type = string
+  default = "../kafka_connect/."
+}
+
+variable "kafka-connect-image-name" {
+  type = string
+  default = "kafka-connect-iceberg"
+}
+
+variable "kafka-connect-image-tag" {
+  type = string
+  default = "7.8.0"
+}
+
 # variable "beam-python-harness-docker-file-location" {
 #   type = string
 #   default = "../beam_consumer"

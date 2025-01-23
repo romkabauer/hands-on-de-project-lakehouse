@@ -19,5 +19,3 @@ variable "app-name" {
   description = "Name for the kafka app"
   default     = "kafka"
 }
-
-variable "storage-sa-key" {}

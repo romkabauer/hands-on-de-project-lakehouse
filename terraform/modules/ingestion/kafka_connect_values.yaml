@@ -1,0 +1,40 @@
+cp-zookeeper:
+  enabled: false
+
+cp-kafka:
+  enabled: false
+
+cp-ksql-server:
+  enabled: false
+
+cp-control-center:
+  enabled: false
+
+cp-schema-registry:
+  enabled: false
+
+cp-kafka-rest:
+  enabled: false
+
+cp-kafka-connect:
+  image: "${kafka_connect_image_name}"
+  imageTag: "${kafka_connect_image_tag}"
+  imagePullSecrets:
+    - name: ${registry_secret}
+  kafka:
+    bootstrapServers: "PLAINTEXT://${kafka_service_name}.${namespace}:9092"
+  prometheus:
+    jmx:
+      enabled: false
+  resources:
+    limits:
+      ephemeral-storage: "1Gi"
+  customEnv:
+    GOOGLE_APPLICATION_CREDENTIALS: "/etc/creds/gcp_creds.json"
+  volumeMounts:
+    - name: gcp-creds
+      mountPath: /etc/creds
+  volumes:
+    - name: gcp-creds
+      secret:
+        secretName: gcp-creds

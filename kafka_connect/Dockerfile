@@ -2,6 +2,8 @@ FROM confluentinc/cp-kafka-connect:7.8.0
 
 WORKDIR /usr/share/java
 
+# TODO: try with wget
+# https://www.confluent.io/hub/tabular/iceberg-kafka-connect
 COPY ./tabular-iceberg-kafka-connect-0.6.19 /usr/share/java/kafka-connect-iceberg/
 
 COPY ./kafka-connect.properties /etc/kafka-connect/config/

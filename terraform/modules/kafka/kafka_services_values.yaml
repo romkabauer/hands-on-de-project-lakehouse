@@ -31,23 +31,4 @@ cp-kafka-rest:
       ephemeral-storage: "1Gi"
 
 cp-kafka-connect:
-  image: "custom-kafka-connect"
-  imageTag: "7.8.0"
-  imagePullPolicy: Never
-  kafka:
-    bootstrapServers: "PLAINTEXT://${kafka_service_name}.${namespace}:9092"
-  prometheus:
-    jmx:
-      enabled: false
-  resources:
-    limits:
-      ephemeral-storage: "1Gi"
-  customEnv:
-    GOOGLE_APPLICATION_CREDENTIALS: "/etc/creds/gcp_creds.json"
-  volumeMounts:
-    - name: gcp-creds
-      mountPath: /etc/creds
-  volumes:
-    - name: gcp-creds
-      secret:
-        secretName: gcp-creds
+  enabled: false

@@ -35,7 +35,6 @@ module "kafka" {
   source = "./modules/kafka"
 
   brokers-number = 1
-  storage-sa-key = module.gcp-storage.storage-access-key
 }
 
 module "producer" {
@@ -69,11 +68,25 @@ module "lakehouse" {
   source = "./modules/lakehouse"
 
   gcp-project-id = var.gcp-project-id
+  storage-sa-key = module.gcp-storage.storage-access-key
+}
+
+module "ingestion" {
+  source = "./modules/ingestion"
+
+  storage-sa-key = module.gcp-storage.storage-access-key
+  registry-secret = module.gcp-registry.registry-secret
+
+  kafka-service-name = module.kafka.kafka-service
+
+  kafka_connect_image_name = "${module.gcp-registry.registry-location}-docker.pkg.dev/${var.gcp-project-id}/${module.gcp-registry.data-services-repository-id}/${module.docker.kafka-connect-image-name}"
+  kafka_connect_image_tag = module.docker.kafka-connect-image-tag
 }
 
 # TODO: try to write custom ParDo with pyiceberg to write from kafka to iceberg table
 # since built-in Iceberg sink is not woking properly with Beam Python SDK on Flink Runner
 # Related issue: https://github.com/apache/beam/issues/31830
+# NOTE: can be used as an example of reading from kafka and writing to file
 
 # module "flink" {
 #   source = "./modules/flink"

@@ -6,3 +6,5 @@ variable "k8s-namespace" {
 variable "gcp-project-id" {
   type = string
 }
+
+variable "storage-sa-key" {sensitive = true}

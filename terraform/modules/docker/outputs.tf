@@ -14,6 +14,14 @@ output "data-producer-image-tag" {
   value = var.data-producer-image-tag
 }
 
+output "kafka-connect-image-name" {
+  value = var.kafka-connect-image-name
+}
+
+output "kafka-connect-image-tag" {
+  value = var.kafka-connect-image-tag
+}
+
 # output "beam-python-harness-image-name" {
 #   value = var.beam-python-harness-image-name
 # }

@@ -1,6 +1,6 @@
 variable "k8s-namespace" {
   type = string
-  default = "ingestion-layer"
+  default = "producer"
 }
 
 variable "app-name" {
