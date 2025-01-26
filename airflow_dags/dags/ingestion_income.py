@@ -16,7 +16,7 @@ secret_volume = Secret(
     key="gcp_creds.json",
 )
 
-with DAG(dag_id="income_producer",
+with DAG(dag_id="ingestion_income",
          tags=["ingestion"],
          start_date=datetime(2024,2,10),
          schedule_interval="@daily",
@@ -40,6 +40,15 @@ with DAG(dag_id="income_producer",
     )
 
     # NOTE: target table should be created in Trino before running this DAG
+    # Can be created via:
+    # CREATE SCHEMA trino_db.raw;
+    # CREATE TABLE trino_db.raw.income_batch (
+    #     user_id VARCHAR,
+    #     user_country VARCHAR,
+    #     source VARCHAR,
+    #     amount VARCHAR,
+    #     currency VARCHAR
+    # );
     # TODO: Pre-configure/modiy target table in Trino on deploy
     ingest_incomes = GCSToTrinoOperator(
         task_id="ingest_incomes",
