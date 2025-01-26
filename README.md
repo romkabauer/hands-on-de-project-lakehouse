@@ -22,7 +22,12 @@ This monorepo contains:
   - Trino
   - Apache Flink
   - Apache Beam
-- Storage and Metastore
+- Storage, Catalogs and Metastores
   - Google Cloud Storage
   - Apache Iceberg
   - Nessie Catalog
+### Future plans
+- Finish Flink+Beam data integration pipeline for streaming data from Kafka to Iceberg table
+- Integrate more SQL query engines like Spark, Dremio and make it configurable in TF
+- Integrate more catalogs like Hive, Polaris and make it configurable in TF
+- Integrate Minio as storage option
