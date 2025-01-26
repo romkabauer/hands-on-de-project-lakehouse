@@ -1,5 +1,6 @@
 # Data Engineering project of building basic Lakehouse
-Goal is to try various data tools and technologies (cloud and self-hosted) to build basic lakehouse infrastructure enabling data ingestion, storage and modelling.
+Goal is to explore various data tools and technologies (cloud and self-hosted) to build basic lakehouse infrastructure enabling data ingestion, storage and modelling.
+
 This monorepo contains:
 - `terraform` - infrastructure definition separated by modules (Kafka, GCP, docker, Airflow, Flink, etc.)
 - `airflow_dags` - Airflow DAGs with basic examples of scheduled workflows
