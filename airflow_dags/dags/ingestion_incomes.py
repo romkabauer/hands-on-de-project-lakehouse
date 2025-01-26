@@ -16,7 +16,7 @@ secret_volume = Secret(
     key="gcp_creds.json",
 )
 
-with DAG(dag_id="ingestion_income",
+with DAG(dag_id="ingestion_incomes",
          tags=["ingestion"],
          start_date=datetime(2024,2,10),
          schedule_interval="@daily",
