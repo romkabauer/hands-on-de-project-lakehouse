@@ -39,6 +39,8 @@ with DAG(dag_id="income_producer",
         get_logs=True,
     )
 
+    # NOTE: target table should be created in Trino before running this DAG
+    # TODO: Pre-configure/modiy target table in Trino on deploy
     ingest_incomes = GCSToTrinoOperator(
         task_id="ingest_incomes",
         gcp_conn_id="gcs_ingestion_bucket",
