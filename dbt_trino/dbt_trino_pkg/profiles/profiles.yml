@@ -1,0 +1,12 @@
+dbt_trino:
+  target: trino
+  outputs:
+    trino:
+      type: "trino"
+      method: "none"
+      user: "{{ env_var('TRINO_USER') }}"
+      host: "{{ env_var('TRINO_HOST') }}"
+      port: "{{ env_var('TRINO_PORT') | as_number }}"
+      database: "trino_db"
+      schema: "raw"
+      threads: 4

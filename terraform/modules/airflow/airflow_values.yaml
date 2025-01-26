@@ -6,7 +6,7 @@ migrateDatabaseJob:
   useHelmHooks: false
   applyCustomEnv: false
 registry:
-  secretName: ${registry-secret-name}
+  secretName: ${gcp-registry-secret}
 defaultAirflowRepository: ${default-airflow-repository}
 defaultAirflowTag: ${airflow-image-tag}
 images:
@@ -14,20 +14,46 @@ images:
     repository: ${default-airflow-repository}
     tag: ${airflow-image-tag}
     pullPolicy: Always
-webserverSecretKey: ${airflow-webserver-secret-result}
+webserverSecretKey: "${airflow-webserver-secret-result}"
 webserver:
   startupProbe:
     timeoutSeconds: 60
   livenessProbe:
     initialDelaySeconds: 60
+workers:
+  extraVolumes:
+    - name: gcp-keyfile
+      secret:
+        secretName: ${gcs-creds-secret}
+  extraVolumeMounts:
+    - name: gcp-keyfile
+      mountPath: /opt/airflow/secrets/gcp-keyfile
+      readOnly: true
 env:
-  - name: PRODUCER_BATCH_IMAGE
-    value: ${producer-image}:${data-services-image-tag}
-  - name: PRODUCER_BATCH_NAMESPACE
-    value: ${namespace}
-  - name: PRODUCER_BATCH_CONFIG
-    value: ${producer-batch-config}
-  - name: GCP_CREDS_SECRET_NAME
-    value: ${gcp-creds-secret}
+  - name: GCS_CREDS_SECRET_NAME
+    value: ${gcs-creds-secret}
   - name: GCP_REGISTRY_SECRET
     value: ${gcp-registry-secret}
+
+  - name: PRODUCER_BATCH_NAMESPACE
+    value: ${namespace}
+  - name: PRODUCER_BATCH_IMAGE
+    value: ${producer-image}:${producer-image-tag}
+  - name: PRODUCER_BATCH_CONFIG
+    value: ${producer-batch-config}
+
+  - name: LAKEHOUSE_NAMESPACE
+    value: ${namespace}
+  - name: ETL_CONFIG
+    value: ${etl-config}
+  - name: ETL_IMAGE
+    value: ${etl-image}:${etl-image-tag}
+
+  - name: INCOME_INGESTION_BUCKET_NAME
+    value: ${income-ingestion-bucket-name}
+  - name: TRINO_ING_TARGET_TABLE
+    value: ${trino-ing-target-table}
+  - name: AIRFLOW_CONN_GCS_INGESTION_BUCKET
+    value: '{"conn_type": "google_cloud_platform", "extra": {"key_path": "/opt/airflow/secrets/gcp-keyfile/gcp_creds.json"}}'
+  - name: AIRFLOW_CONN_TRINO
+    value: '{"conn_type": "trino", "host": "${trino-host}", "port": "${trino-port}", "login": "${trino-user}"}'

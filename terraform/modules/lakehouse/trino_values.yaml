@@ -2,14 +2,14 @@ service:
   port: 8095
 
 catalogs:
-  nessie: |
+  trino_db: |
     connector.name=iceberg
     fs.native-gcs.enabled=true
     gcs.json-key-file-path=/etc/creds/gcp_creds.json
     iceberg.catalog.type=nessie
     iceberg.nessie-catalog.uri=${nessie_uri}
     iceberg.nessie-catalog.ref=main
-    iceberg.nessie-catalog.default-warehouse-dir=${warehouse_dir}
+    iceberg.nessie-catalog.default-warehouse-dir=${base_warehouse_path}/trino_db
     iceberg.register-table-procedure.enabled=true
 
 env:

@@ -9,9 +9,14 @@ variable "sa-storage-key-file-name" {
   default = "sa-storage-key.json"
 }
 
-variable "bucket-name" {
+variable "income-ingestion-bucket-name" {
   type = string
-  default = "expenses-de-project"
+  default = "income-ingestion"
+}
+
+variable "expenses-warehouse-bucket-name" {
+  type = string
+  default = "expenses-warehouse"
 }
 
 variable "bucket-location" {

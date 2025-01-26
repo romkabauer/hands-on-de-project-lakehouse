@@ -1,3 +1,14 @@
+resource "kubernetes_secret" "registry" {
+  metadata {
+    name = "registry"
+    namespace = kubernetes_namespace.airflow.metadata[0].name
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+
+  data = var.registry-secret.data
+}
+
 resource "kubernetes_secret" "gcp-creds" {
   metadata {
     name = "gcp-creds"

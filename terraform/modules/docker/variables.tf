@@ -21,7 +21,7 @@ variable "airflow-image-name" {
 
 variable "airflow-image-tag" {
   type = string
-  default = "0.1.0"
+  default = "2.10.4-0.1.0"
 }
 
 variable "data-producer-docker-file-location" {
@@ -73,3 +73,18 @@ variable "kafka-connect-image-tag" {
 #   type = string
 #   default = "2.61.0_v0.1.0"
 # }
+
+variable "dbt-trino-pkg-docker-file-location" {
+  type = string
+  default = "../dbt_trino/."
+}
+
+variable "dbt-trino-pkg-image-name" {
+  type = string
+  default = "dbt-trino-pkg"
+}
+
+variable "dbt-trino-pkg-image-tag" {
+  type = string
+  default = "1.9.0-0.1.0"
+}

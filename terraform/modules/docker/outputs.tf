@@ -29,3 +29,11 @@ output "kafka-connect-image-tag" {
 # output "beam-python-harness-image-tag" {
 #   value = var.beam-python-harness-image-tag
 # }
+
+output "dbt-trino-pkg-image-name" {
+  value = var.dbt-trino-pkg-image-name
+}
+
+output "dbt-trino-pkg-image-tag" {
+  value = var.dbt-trino-pkg-image-tag
+}

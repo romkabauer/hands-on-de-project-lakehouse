@@ -1,6 +1,6 @@
-resource "google_storage_bucket" "gcs-bucket" {
+resource "google_storage_bucket" "gcs-bucket-income-ingestion" {
     project       = var.gcp-project-id
-    name          = var.bucket-name
+    name          = var.income-ingestion-bucket-name
     location      = var.bucket-location
     storage_class = "STANDARD"
     force_destroy = true
@@ -10,7 +10,7 @@ resource "google_storage_bucket" "gcs-bucket" {
 
 resource "google_storage_bucket" "gcs-bucket-warehouse" {
     project       = var.gcp-project-id
-    name          = "expenses-warehouse"
+    name          = var.expenses-warehouse-bucket-name
     location      = var.bucket-location
     storage_class = "STANDARD"
     force_destroy = true

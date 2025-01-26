@@ -8,3 +8,4 @@ variable "gcp-project-id" {
 }
 
 variable "storage-sa-key" {sensitive = true}
+variable "expenses-warehouse-bucket-name" {type = string}

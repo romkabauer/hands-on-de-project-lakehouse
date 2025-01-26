@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    database: trino_db
+    schema: raw
+    tables:
+      - name: expenses
+      - name: income_batch

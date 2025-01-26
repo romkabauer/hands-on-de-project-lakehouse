@@ -3,6 +3,10 @@ output "storage-access-key" {
   sensitive = true
 }
 
-output "storage-bucket-name" {
-  value = var.bucket-name
+output "income-ingestion-bucket-name" {
+  value = var.income-ingestion-bucket-name
+}
+
+output "expenses-warehouse-bucket-name" {
+  value = var.expenses-warehouse-bucket-name
 }

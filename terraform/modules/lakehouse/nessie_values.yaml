@@ -1,0 +1,8 @@
+catalogs:
+  enabled: true
+
+extraEnv:
+  - name: nessie.catalog.default-warehouse
+    value: trino_db
+  - name: nessie.catalog.warehouses.trino_db.location
+    value: ${base_warehouse_path}/trino_db
