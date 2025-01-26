@@ -1,5 +1,5 @@
 from kafka import KafkaProducer
-from serializers.base_serializer import AbstractSerializer
+from serializers.abstract_serializer import AbstractSerializer
 from writers.abstract_writer import AbstractWriter
 
 

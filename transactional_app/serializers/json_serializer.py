@@ -2,7 +2,7 @@
 
 
 import json
-from serializers.base_serializer import AbstractSerializer
+from serializers.abstract_serializer import AbstractSerializer
 
 
 class JSONSerializer(AbstractSerializer):

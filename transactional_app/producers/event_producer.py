@@ -3,10 +3,10 @@ import time
 from common.exceptions import (
     EventFrequencyParameterError
 )
-from producers.base_producer import BaseProducer
+from producers.data_producer import AbstractDataProducer
 
 
-class EventProducer(BaseProducer):
+class EventProducer(AbstractDataProducer):
     """Producer of events for sending them to Kafka"""
 
     def run(self):

@@ -1,10 +1,10 @@
-from producers.base_producer import BaseProducer
+from producers.data_producer import AbstractDataProducer
 
 
-class BatchProducer(BaseProducer):
+class BatchProducer(AbstractDataProducer):
     """Producer of batch files for saving them locally"""
-    def __init__(self, producer_type: str = "BATCH", config: dict = None) -> None:
-        super().__init__(producer_type, config)
+    def __init__(self, config: dict = None) -> None:
+        super().__init__(config)
 
     def run(self):
         output_path = self.generator.generate()

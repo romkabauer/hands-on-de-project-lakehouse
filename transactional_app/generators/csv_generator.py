@@ -11,6 +11,7 @@ class CSVGenerator(AbstractGenerator):
     """Class for CSV data generation"""
 
     def generate(self):
+        include_header = bool(int(self.properties.get("include_header", True)))
         try:
             sample_size = int(self.properties["sample_size_records"])
         except TypeError as e:
@@ -21,7 +22,8 @@ class CSVGenerator(AbstractGenerator):
 
         with open(temp_path, "w+", encoding="UTF-8") as csv_stream:
             csv_writer = csv.writer(csv_stream)
-            csv_writer.writerow(IncomeRecord.__annotations__.keys())
+            if include_header:
+                csv_writer.writerow(IncomeRecord.__annotations__.keys())
             for _ in range(sample_size):
                 rec = astuple(IncomeRecord(
                     self._generate_uuid(),

@@ -16,9 +16,8 @@ from writers.gcs_writer import GCSWriter
 from writers.kafka_writer import KafkaWriter
 
 
-class BaseProducer(AbstractDataApp):
-    def __init__(self, producer_type: str = "EVENT", config: dict = None) -> None:
-        self.type = producer_type
+class AbstractDataProducer(AbstractDataApp):
+    def __init__(self, config: dict = None) -> None:
         self.config = config
         self.logger = get_logger(self.__class__.__name__)
         self.generator = self._get_generator(config["generator"].get("properties", {}),

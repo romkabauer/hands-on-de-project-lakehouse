@@ -13,6 +13,7 @@ class ExpenseRecord:
     amount: int
     currency: str
     custom_message: str
+    expense_timestamp: str
 
 @dataclass
 class IncomeRecord:
