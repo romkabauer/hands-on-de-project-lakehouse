@@ -1,6 +1,6 @@
 variable "k8s-namespace" {
   type = string
-  default = "ingestion"
+  default = "kafka"
 }
 
 variable "storage-sa-key" {sensitive = true}
